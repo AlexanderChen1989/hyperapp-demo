@@ -7,6 +7,7 @@ app({
   state: {
     count: 0
   },
+  init: () => console.log('Im app!'),
   view: (state, actions) => {
     const pageProps = extract(state, actions, 'page')
     const counterProps = extract(state, actions, 'counter')

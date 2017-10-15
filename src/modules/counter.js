@@ -10,6 +10,7 @@ const fakeDelayReject = () =>
 
 export const CounterM = {
   state: { num: 0 },
+  init: () => console.log('Im counter!'),
   actions: {
     loadData: () => async update => {
       const state = await fakeDelayResolve()
