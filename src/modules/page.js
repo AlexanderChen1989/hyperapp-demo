@@ -5,6 +5,7 @@ const initState = { loadStatus: 'ready', error: null }
 export const PageM = {
   state: initState,
   actions: {
+    init: () => console.log('Im page!'),
     load: (_s, _a, viewProps) => async update => {
       try {
         update({ loadStatus: 'started' })
