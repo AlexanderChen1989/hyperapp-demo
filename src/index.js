@@ -1,7 +1,7 @@
 import { h, app } from 'hyperapp'
 
-import { CounterM, Counter } from './modules/counter'
-import { Page, PageM } from './modules/page'
+import * as counter from './modules/counter'
+import * as page from './modules/page'
 
 app({
   state: {
@@ -9,22 +9,26 @@ app({
   },
   init: () => console.log('Im app!'),
   view: (state, actions) => {
-    const pageProps = extract(state, actions, 'page')
-    const counterProps = extract(state, actions, 'counter')
+    const pageProps = getProps(state, actions, 'page')
+    const counterProps = getProps(state, actions, 'counter')
 
     return (
       <main>
-        <Page {...pageProps} viewProps={counterProps} view={Counter} />
+        <page.view
+          {...pageProps}
+          viewProps={counterProps}
+          view={counter.view}
+        />
       </main>
     )
   },
   modules: {
-    counter: CounterM,
-    page: PageM
+    counter,
+    page
   }
 })
 
-function extract(state, actions, moduleName) {
+function getProps(state, actions, moduleName) {
   state = state ? state[moduleName] || {} : {}
   actions = actions ? actions[moduleName] || {} : {}
   return Object.assign({}, state, actions)
