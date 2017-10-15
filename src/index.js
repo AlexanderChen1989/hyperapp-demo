@@ -2,6 +2,7 @@ import { h, app } from 'hyperapp'
 
 import * as counter from './modules/counter'
 import * as page from './modules/page'
+import getProps from './utils/getProps'
 
 app({
   state: {
@@ -27,9 +28,3 @@ app({
     page
   }
 })
-
-function getProps(state, actions, moduleName) {
-  state = state ? state[moduleName] || {} : {}
-  actions = actions ? actions[moduleName] || {} : {}
-  return Object.assign({}, state, actions)
-}
