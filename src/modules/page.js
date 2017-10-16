@@ -20,13 +20,16 @@ const actions = {
   wrap: (state, actions, module) => update => viewProps => {
     if (!module.view) return
     return (
-      <div oncreate={() => actions.load(viewProps)} onremove={() => update(initState)}>
+      <div>
+        <div oncreate={() => actions.load(viewProps)} />
+        <div onremove={() => update(initState)} />
         {state.loadStatus === 'started' && <h1>Loading...</h1>}
-        {state.loadStatus === 'finished' && !state.error && module.view(viewProps)}
+        {state.loadStatus === 'finished' &&
+          !state.error && <module.view {...viewProps} />}
         {state.error && <h1>{state.error}</h1>}
       </div>
     )
   }
 }
 
-export default { state, actions }
+export default { init, state, actions }
