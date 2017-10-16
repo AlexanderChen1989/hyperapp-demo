@@ -19,7 +19,7 @@ const actions = {
       return typeof viewProps === 'function'
         ? view(viewProps(Object.assign({}, state, actions)))
         : view(viewProps)
-    else return <div />
+    else return null
   },
   setPath: (state, actions, path) => ({ path }),
   go: (state, actions, path) => update => {
