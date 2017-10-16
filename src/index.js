@@ -9,12 +9,12 @@ import getProps from './utils/getProps'
 import merge from './utils/merge'
 
 app({
-  view: (state, actions) => {
-    const Counter = actions.page.wrap(counter)
+  view: ({ counter: cState }, { counter: cActions, page: { wrap } }) => {
+    const Counter = wrap(counter)
 
     return (
       <main>
-        <Counter {...merge(state.counter, actions.counter)} />
+        <Counter {...merge(cState, cActions)} />
       </main>
     )
   },
