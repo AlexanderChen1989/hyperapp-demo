@@ -1,4 +1,10 @@
 import * as actions from './actions'
-export { actions }
-export { default as view } from './view'
-export { state, init } from './state'
+import view from './view'
+import { state, init } from './state'
+
+export default {
+  state,
+  init,
+  actions,
+  view
+}

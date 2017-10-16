@@ -1,21 +1,20 @@
+import 'bootstrap/dist/css/bootstrap.css'
+
 import { h, app } from 'hyperapp'
 
-import * as counter from './modules/counter'
-import * as page from './modules/page'
+import counter from './modules/counter'
+import hello from './modules/hello'
+import page from './modules/page'
 import getProps from './utils/getProps'
+import merge from './utils/merge'
 
 app({
   view: (state, actions) => {
-    const pageProps = getProps(state, actions, 'page')
-    const counterProps = getProps(state, actions, 'counter')
+    const Counter = actions.page.wrap(counter)
 
     return (
       <main>
-        <page.view
-          {...pageProps}
-          viewProps={counterProps}
-          view={counter.view}
-        />
+        <Counter {...merge(state.counter, actions.counter)} />
       </main>
     )
   },

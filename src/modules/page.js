@@ -1,11 +1,11 @@
 import { h } from 'hyperapp'
 
 const initState = { loadStatus: 'ready', error: null }
-export const state = initState
-export const init = () => console.log('Im page!')
+const state = initState
+const init = () => console.log('Im page!')
 
-export const actions = {
-  load: (_s, _a, viewProps) => async update => {
+const actions = {
+  load: (_state, _actions, viewProps) => async update => {
     try {
       update({ loadStatus: 'started' })
       if (!viewProps.loadData) return
@@ -17,13 +17,16 @@ export const actions = {
       update({ loadStatus: 'finished' })
     }
   },
-  reset: () => initState
+  wrap: (state, actions, module) => update => viewProps => {
+    if (!module.view) return
+    return (
+      <div oncreate={() => actions.load(viewProps)} onremove={() => update(initState)}>
+        {state.loadStatus === 'started' && <h1>Loading...</h1>}
+        {state.loadStatus === 'finished' && !state.error && module.view(viewProps)}
+        {state.error && <h1>{state.error}</h1>}
+      </div>
+    )
+  }
 }
 
-export const view = ({ loadStatus, error, load, reset, viewProps, view }) => (
-  <div oncreate={() => load(viewProps)} onremove={reset}>
-    {loadStatus === 'started' && <h1>Loading...</h1>}
-    {loadStatus === 'finished' && !error && view(viewProps)}
-    {error && <h1>{error}</h1>}
-  </div>
-)
+export default { state, actions }
